@@ -8,6 +8,14 @@ from numpy import typing as npt
 from matplotlib import pyplot as plt
 
 
+def show_duration(y: npt.ArrayLike, sr: int) -> float:
+    pass
+
+
+def selcet_time(start_time: float, end_time: float) :
+    pass
+
+
 def plot_waveform(y: npt.ArrayLike, sr: int, start_time: float = 0.0, end_time: float = None) -> None :
 
     startIdx = int(start_time * sr)
