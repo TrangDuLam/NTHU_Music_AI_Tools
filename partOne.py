@@ -3,9 +3,11 @@ from librosa import display
 from librosa import feature
 
 import numpy as np
-from numpy import typing as npt
-
 from matplotlib import pyplot as plt
+import scipy
+
+from numpy import typing as npt
+import typing
 
 
 def show_duration(y: npt.ArrayLike, sr: int) -> float:

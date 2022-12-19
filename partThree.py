@@ -3,9 +3,13 @@ from librosa import display
 from librosa import feature
 
 import numpy as np
-from numpy import typing as npt
-
 from matplotlib import pyplot as plt
+import scipy
+
+from numpy import typing as npt
+import typing
+
+
 
 def plot_onset_strength(y: npt.ArrayLike, sr:int, standard: bool = True, custom_mel: bool = False, cqt: bool = False) :
     
@@ -40,7 +44,7 @@ def plot_onset_strength(y: npt.ArrayLike, sr:int, standard: bool = True, custom_
     ax[1].set(ylabel='Normalized strength', yticks=[])
 
 
-def onset_and_beat_analysis(y: npt.ArrayLike, sr:int, show_tempo: bool = True, spec_type: str = 'mel', spec_hop_length: int = 512) :
+def onset_and_beat_analysis(y: npt.ArrayLike, sr:int, show_beat: bool = True, spec_type: str = 'mel', spec_hop_length: int = 512) :
     
     fig, ax = plt.subplots(nrows=2, sharex=True)
     onset_env = librosa.onset.onset_strength(y=y, sr=sr, aggregate=np.median)
@@ -69,8 +73,80 @@ def onset_and_beat_analysis(y: npt.ArrayLike, sr:int, show_tempo: bool = True, s
     ax[1].plot(times, librosa.util.normalize(onset_env), label='Onset strength')
     ax[1].vlines(times[beats], 0, 1, alpha=0.5, color='r', linestyle='--', label='Beats')
     
-    if show_tempo :
+    if show_beat :
         tempoString = 'Tempo = %.2f'% (tempo)
         ax[1].plot([], [], ' ', label = tempoString)
     
     ax[1].legend()
+
+
+def predominant_local_pulse(y: npt.ArrayLike, sr:int) -> None :
+
+    onset_env = librosa.onset.onset_strength(y=y, sr=sr)
+    pulse = librosa.beat.plp(onset_envelope=onset_env, sr=sr)
+    beats_plp = np.flatnonzero(librosa.util.localmax(pulse))
+    times = librosa.times_like(pulse, sr=sr)
+
+    plt.figure()
+    plt.plot(times, librosa.util.normalize(pulse),label='PLP')
+    plt.vlines(times[beats_plp], 0, 1, alpha=0.5, color='r', 
+             linestyle='--', label='PLP Beats')
+    plt.legend()
+    plt.title("Predominant local pulse")
+
+
+def static_tempo_estimation(y: npt.ArrayLike, sr: int, hop_length: int = 512) -> None:
+  
+  '''
+  To visualize the result of static tempo estimation
+  
+  y: input signal array
+  sr: sampling rate
+  
+  '''
+
+  onset_env = librosa.onset.onset_strength(y=y, sr=sr)
+  tempo = librosa.beat.tempo(onset_envelope=onset_env, sr=sr)
+
+  # Static tempo estimation
+  prior = scipy.stats.uniform(30, 300)  # uniform over 30-300 BPM
+  utempo = librosa.beat.tempo(onset_envelope=onset_env, sr=sr, prior=prior)
+
+  tempo = tempo.item()
+  utempo = utempo.item()
+  ac = librosa.autocorrelate(onset_env, max_size=2 * sr // hop_length)
+  freqs = librosa.tempo_frequencies(len(ac), sr=sr,
+                                   hop_length=hop_length)
+
+  fig, ax = plt.subplots()
+  ax.semilogx(freqs[1:], librosa.util.normalize(ac)[1:],
+              label='Onset autocorrelation', base=2)
+  ax.axvline(tempo, 0, 1, alpha=0.75, linestyle='--', color='r',
+             label='Tempo (default prior): {:.2f} BPM'.format(tempo))    
+  ax.axvline(utempo, 0, 1, alpha=0.75, linestyle=':', color='g',
+             label='Tempo (uniform prior): {:.2f} BPM'.format(utempo)) 
+  ax.set(xlabel='Tempo (BPM)', title='Static tempo estimation')
+  ax.grid(True)
+  ax.legend() 
+
+
+def plot_tempogram(y: npt.ArrayLike, sr: int, type: str = 'autocorr', hop_length: int = 512) -> None :
+    
+    oenv = librosa.onset.onset_strength(y=y, sr=sr, hop_length=hop_length)
+    tempogram = librosa.feature.fourier_tempogram(onset_envelope=oenv, sr=sr, hop_length=hop_length)
+    tempo = librosa.beat.tempo(onset_envelope=oenv, sr=sr, hop_length=hop_length)[0]
+
+    if type == 'fourier' :
+        # To determine which temp to show?
+        librosa.display.specshow(np.abs(tempogram), sr=sr, hop_length=hop_length, 
+                                 x_axis='time', y_axis='fourier_tempo', cmap='magma')
+        plt.axhline(tempo, color='w', linestyle='--', alpha=1, label='Estimated tempo={:g}'.format(tempo))
+        plt.legend(loc='upper right')
+        plt.title('Fourier Tempogram')
+
+    if type == 'autocorr' :
+        ac_tempogram = librosa.feature.tempogram(onset_envelope=oenv, sr=sr, hop_length=hop_length, norm=None)
+        librosa.display.specshow(ac_tempogram, sr=sr, hop_length=hop_length, x_axis='time', y_axis='tempo', cmap='magma')
+        plt.axhline(tempo, color='w', linestyle='--', alpha=1, label='Estimated tempo={:g}'.format(tempo))
+        plt.legend(loc='upper right')
+        plt.title('Autocorrelation Tempogram')
