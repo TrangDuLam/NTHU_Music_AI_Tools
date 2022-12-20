@@ -5,10 +5,12 @@
 
 ## Progress Update ##
 
-| Stage |     Date     | Description |
-| :---: |     :---:    |     :---:   |
-| Dev01 | Dec. 15 2022 |
-| Dev02 | Dec. 20 2022 |
+| Stage |     Date     |    Description   |
+| :---: |     :---:    |       :---:      |
+| Dev01 | Dec. 15 2022 | Part 1 Completed |
+| Dev02 | Dec. 20 2022 | Part 3 Completed |
+
+### Progress Bar ### 
 
 ## Introduction to this repository ##
 
@@ -26,3 +28,11 @@
 ### Released Script ###
 
 * Format: TBD
+
+## Functionality ##
+
+### Time Domain ###
+
+
+
+## Future Works ##
