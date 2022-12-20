@@ -1,7 +1,7 @@
 # NTHU_Music_AI_Tools ##
 
-* Project launced by Prof. Yufen Huang *
-* Course NTHU Music AI *
+* Project launced by Prof. Yufen Huang
+* Course NTHU Music AI
 
 ## Progress Update ##
 
