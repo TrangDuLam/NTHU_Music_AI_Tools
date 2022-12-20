@@ -75,7 +75,7 @@ def beats_clicks(y: npt.ArrayLike, sr: int) -> None :
     sf.write('stereo_file.wav', y+y_beats, sr, subtype='PCM_24')
 
 
-def onset_and_beat_analysis(y: npt.ArrayLike, sr:int, show_beat: bool = True, spec_type: str = 'mel', spec_hop_length: int = 512) :
+def beat_analysis(y: npt.ArrayLike, sr:int, write_to_wav: bool = True, spec_type: str = 'mel', spec_hop_length: int = 512) :
     
     fig, ax = plt.subplots(nrows=2, sharex=True)
     onset_env = librosa.onset.onset_strength(y=y, sr=sr, aggregate=np.median)
@@ -103,12 +103,13 @@ def onset_and_beat_analysis(y: npt.ArrayLike, sr:int, show_beat: bool = True, sp
     
     ax[1].plot(times, librosa.util.normalize(onset_env), label='Onset strength')
     ax[1].vlines(times[beats], 0, 1, alpha=0.5, color='r', linestyle='--', label='Beats')
-    
-    if show_beat :
-        tempoString = 'Tempo = %.2f'% (tempo)
-        ax[1].plot([], [], ' ', label = tempoString)
-    
+    tempoString = 'Tempo = %.2f'% (tempo)
+    ax[1].plot([], [], ' ', label = tempoString)
     ax[1].legend()
+
+    if write_to_wav :
+        y_beats = librosa.clicks(frames=beats, sr=sr, length=len(y))
+        sf.write('stereo_file.wav', y+y_beats, sr, subtype='PCM_24')
 
 
 def predominant_local_pulse(y: npt.ArrayLike, sr:int) -> None :
