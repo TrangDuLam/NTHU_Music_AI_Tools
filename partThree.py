@@ -5,10 +5,33 @@ from librosa import feature
 import numpy as np
 from matplotlib import pyplot as plt
 import scipy
+import soundfile as sf
 
 from numpy import typing as npt
 import typing
 
+
+def onsets_detection(y: npt.ArrayLike, sr: int, write_to_wav: bool = True) -> None :
+
+    o_env = librosa.onset.onset_strength(y=y, sr=sr)
+    times = librosa.times_like(o_env, sr=sr)
+    onset_frames = librosa.onset.onset_detect(onset_envelope=o_env, sr=sr)
+    D = np.abs(librosa.stft(y))
+
+    fig, ax = plt.subplots(nrows=2, sharex=True)
+    librosa.display.specshow(librosa.amplitude_to_db(D, ref=np.max),
+                             x_axis='time', y_axis='log', ax=ax[0])
+    ax[0].set(title='Power spectrogram')
+    ax[0].label_outer()
+    ax[1].plot(times, o_env, label='Onset strength')
+    ax[1].vlines(times[onset_frames], 0, o_env.max(), color='r', alpha=0.9,
+                 linestyle='--', label='Onsets')
+    ax[1].legend()
+
+
+    if write_to_wav :
+        y_onset_clicks = librosa.clicks(frames=onset_frames, sr=sr, length=len(y))
+        sf.write('withOnsets.wav', y+y_onset_clicks, sr, subtype='PCM_24')
 
 
 def plot_onset_strength(y: npt.ArrayLike, sr:int, standard: bool = True, custom_mel: bool = False, cqt: bool = False) :
@@ -42,6 +65,14 @@ def plot_onset_strength(y: npt.ArrayLike, sr:int, standard: bool = True, custom_
 
     ax[1].legend()
     ax[1].set(ylabel='Normalized strength', yticks=[])
+
+
+def beats_clicks(y: npt.ArrayLike, sr: int) -> None :
+
+    tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
+    y_beats = librosa.clicks(frames=beats, sr=sr, length=len(y))
+
+    sf.write('stereo_file.wav', y+y_beats, sr, subtype='PCM_24')
 
 
 def onset_and_beat_analysis(y: npt.ArrayLike, sr:int, show_beat: bool = True, spec_type: str = 'mel', spec_hop_length: int = 512) :
@@ -150,3 +181,5 @@ def plot_tempogram(y: npt.ArrayLike, sr: int, type: str = 'autocorr', hop_length
         plt.axhline(tempo, color='w', linestyle='--', alpha=1, label='Estimated tempo={:g}'.format(tempo))
         plt.legend(loc='upper right')
         plt.title('Autocorrelation Tempogram')
+
+

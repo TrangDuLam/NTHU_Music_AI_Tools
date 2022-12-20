@@ -1,18 +1,28 @@
-# NTHU_Music_AI_Tools
-* Project launced by Prof. Yufen Huang
-* Course NTHU Music AI
-## Progress Update
+# NTHU_Music_AI_Tools ##
 
-| Stage | Date | 
-| :---: | :---:|
-| Dev01 | Dec. 15 2022|
+* Project launced by Prof. Yufen Huang *
+* Course NTHU Music AI *
 
-## Introduction to this repository 
-### Developement Stage Notebook
+## Progress Update ##
+
+| Stage |     Date     | Description |
+| :---: |     :---:    |     :---:   |
+| Dev01 | Dec. 15 2022 |
+| Dev02 | Dec. 20 2022 |
+
+## Introduction to this repository ##
+
+### Developement Stage Notebook ##
+
 * partNumber_dev.ipynb : under developing notebook script
 * To check the functionality of the code
-### Under Test Stage Python Script
+
+
+### Under Test Stage Python Script ###
+
 * partNumber.py : under testing and about-to-demo Python script
-* 
-### Released Script
-* Format: TBD 
+
+
+### Released Script ###
+
+* Format: TBD
