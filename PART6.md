@@ -21,7 +21,7 @@
 
 | Progress |     Date     |       Description     |
 |   :---:  |     :---:    |          :---:        |
-|   v1.0   | Dec. 15 2022 | First Stage Completed |
+|   v1.0   | Dec. 30 2022 | First Stage Completed |
 
 ## Further Revamp ##
 
