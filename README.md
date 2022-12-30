@@ -9,6 +9,7 @@
 | :---: |     :---:    |       :---:      |
 | Dev01 | Dec. 15 2022 | Part 1 Completed |
 | Dev02 | Dec. 20 2022 | Part 3 Completed |
+| Dev03 | Dec. 30 2022 | Part 6 Completed |
 
 ### Progress Bar ### 
 
