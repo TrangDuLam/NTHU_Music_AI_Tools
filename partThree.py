@@ -67,14 +67,6 @@ def plot_onset_strength(y: npt.ArrayLike, sr:int, standard: bool = True, custom_
     ax[1].set(ylabel='Normalized strength', yticks=[])
 
 
-def beats_clicks(y: npt.ArrayLike, sr: int) -> None :
-
-    tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
-    y_beats = librosa.clicks(frames=beats, sr=sr, length=len(y))
-
-    sf.write('stereo_file.wav', y+y_beats, sr, subtype='PCM_24')
-
-
 def beat_analysis(y: npt.ArrayLike, sr:int, write_to_wav: bool = True, spec_type: str = 'mel', spec_hop_length: int = 512) :
     
     fig, ax = plt.subplots(nrows=2, sharex=True)

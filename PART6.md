@@ -2,6 +2,13 @@
 
 * Timbre analysis
 
+## Timeline Table ##
+
+| Progress |     Date     |       Description     |
+|   :---:  |     :---:    |          :---:        |
+|   v1.0   | Dec. 30 2022 | First Stage Completed |
+| pre-demo | Jan. 3 2023  |        in-store       |
+
 ## Functions Completed ##
 
 * spectral_centroid_analysis()
@@ -16,12 +23,6 @@
 ## Functions Under Development ##
 
 * None
-
-## Timeline Table ##
-
-| Progress |     Date     |       Description     |
-|   :---:  |     :---:    |          :---:        |
-|   v1.0   | Dec. 30 2022 | First Stage Completed |
 
 ## Further Revamp ##
 

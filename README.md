@@ -13,27 +13,53 @@
 
 ### Progress Bar ###
 
+* Part 1
+  * Fully supported (5/5)
+* Part 2
+  * 4/8 Completed
+  * Only "Pitch Class Histogram" left
+* Part 3
+  * Fully supported (10/10)
+* Part 4
+  * 0%
+* Part 5
+  * 1/3 Completed
+  * raw SSM and Novelty function
+  * Both functions above need the annotation.csv to implement full functionality
+* Part 6
+  * Fully supported (5/5)
+
 ## Introduction to this repository ##
 
-### Developement Stage Notebook ##
+* Librosa tool wrappers under development
+* All the scripts are named by the part number mentioned in the .docx by the professor
+* The exact name would be given after the formal demo day
 
-* partNumber_dev.ipynb : under developing notebook script
-* To check the functionality of the code
+### Development Stage Notebook Scripts ##
 
+* partNumber_dev.ipynb : under developing notebook scripts
+* To check the functionality of the code in place
+* All the function names are temporary
 
-### Under Test Stage Python Script ###
+### Under Test Stage Python Scripts ###
 
-* partNumber.py : under testing and about-to-demo Python script
+* partNumber.py : under testing and about-to-demo Python scripts
+* The scripts released in the future
+* All the function names are temporary
 
-
-### Released Script ###
+### Released Scripts ###
 
 * Format: TBD
+* The officially released version
+* The official GitHub repo should be created
 
-## Functionality ##
+## Code Functionality ##
 
 ### Time Domain ###
 
+## External Functionality ##
 
+* Portability
+  * Direct "git clone" to Google Colab
 
 ## Future Works ##
