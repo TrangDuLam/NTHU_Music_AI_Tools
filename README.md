@@ -57,9 +57,16 @@
 
 ### Time Domain ###
 
-## External Functionality ##
+## Compatibility ##
 
-* Portability
+* Colab
   * Direct "git clone" to Google Colab
+* Interfacing with Streamlit
+  * Need to return variables from functions
 
 ## Future Works ##
+
+* To modify the output figures automatically
+  * Set a ratio to control the length of the picture
+* To use the "PyScript" as future application interface
+  * https://pyscript.net/
